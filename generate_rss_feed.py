@@ -315,7 +315,7 @@ def main():
     parser.add_argument('-o', '--output', default='radio357_feed.xml', help='Nazwa pliku wyjściowego (domyślnie: radio357_feed.xml)')
     parser.add_argument('-n', '--max-episodes', type=int, default=50, help='Maksymalna liczba odcinków (domyślnie: 50)')
     parser.add_argument('--all', action='store_true', help='Pobierz wszystkie dostępne odcinki (ignoruje -n)')
-    parser.add_argument('--include-exclusive', action='store_true', help='Dołącz treści tylko dla patronów (mogą nie działać bez autoryzacji)')
+    parser.add_argument('--free-only', action='store_true', help='Pobierz tylko darmowe odcinki (bez treści dla patronów)')
     parser.add_argument('--login', action='store_true', help='Zaloguj się (dla treści tylko dla patronów)')
     parser.add_argument('--email', help='Email do logowania')
     parser.add_argument('--password', help='Hasło')
@@ -338,10 +338,6 @@ def main():
         
         if auth.login(email, password):
             print("✓ Zalogowano pomyślnie\n")
-            # Automatycznie włącz treści tylko dla patronów przy logowaniu
-            if not args.include_exclusive:
-                args.include_exclusive = True
-                print("ℹ️  Automatycznie włączono treści tylko dla patronów (użyto --login)\n")
         else:
             print("✗ Logowanie nie powiodło się\n")
             auth = None
@@ -350,7 +346,7 @@ def main():
         args.program_id,
         args.output,
         max_episodes=args.max_episodes,
-        include_exclusive=args.include_exclusive,
+        include_exclusive=not args.free_only,  # Domyślnie True, chyba że --free-only
         auth=auth
     )
 
