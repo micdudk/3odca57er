@@ -46,3 +46,9 @@
 
 #Wersja polska
 241
+
+# 369
+1021
+
+# Plac na rozdrożu  
+4131
