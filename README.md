@@ -22,7 +22,7 @@ python podcaster357.py            # Windows
 
 - **Interaktywny wybór** - lista wszystkich 434 programów do wyboru
 - **Automatyczne logowanie** - pyta o login przy pierwszym uruchomieniu, potem zapamiętuje
-- **Treści dla patronów** - dostęp do odcinków tylko dla patronów (wymaga konta Patronite)
+- **Treści dla patronów** - dostęp do odcinków tylko dla patronów (wymaga konta 357 i aktywnego patronatu)
 - **Wybór liczby odcinków** - pobierz wszystkie lub tylko ostatnie N
 - **Wznawianie** - pomija już pobrane pliki
 - **Ładne nazwy** - pliki nazywane datą i tytułem
@@ -38,7 +38,7 @@ python3 podcaster357.py
 
 # Program zapyta:
 # 1. O login (Enter = bez logowania, tylko darmowe)
-# 2. O numer programu (1-434)
+# 2. O numer programu (1-iluś tam, ile aktualnie jest)
 # 3. O liczbę odcinków (Enter = wszystkie)
 ```
 
