@@ -230,12 +230,12 @@ def generate_rss_feed(program_id, output_file, max_episodes=50, include_exclusiv
         episode_image = episode.get("image", program_image)
         
         # Autorzy/prowadzący
-        team = episode.get("team", [])
+        team = episode.get("team") or []
         authors = [member.get("name", "") for member in team if member.get("name")]
         author_emails = [member.get("email", "") for member in team if member.get("email")]
         
         # Kategorie
-        categories = episode.get("categories", [])
+        categories = episode.get("categories") or []
         category_names = [cat.get("name", "") for cat in categories if cat.get("name")]
         
         # Pomiń treści dla patronów jeśli nie chcemy ich includować
