@@ -164,7 +164,10 @@ def generate_rss_feed(program_id, output_file, max_episodes=50, include_exclusiv
     print(f"Program: {program_name}")
     
     # Pobierz odcinki
-    print(f"Pobieranie odcinków (maksymalnie {max_episodes})...")
+    if max_episodes >= 99999:
+        print(f"Pobieranie wszystkich dostępnych odcinków...")
+    else:
+        print(f"Pobieranie odcinków (maksymalnie {max_episodes})...")
     episodes = fetch_all_episodes(program_id, max_episodes)
     print(f"Znaleziono: {len(episodes)} odcinków")
     
@@ -311,6 +314,7 @@ def main():
     parser.add_argument('program_id', help='ID programu')
     parser.add_argument('-o', '--output', default='radio357_feed.xml', help='Nazwa pliku wyjściowego (domyślnie: radio357_feed.xml)')
     parser.add_argument('-n', '--max-episodes', type=int, default=50, help='Maksymalna liczba odcinków (domyślnie: 50)')
+    parser.add_argument('--all', action='store_true', help='Pobierz wszystkie dostępne odcinki (ignoruje -n)')
     parser.add_argument('--include-exclusive', action='store_true', help='Dołącz treści tylko dla patronów (mogą nie działać bez autoryzacji)')
     parser.add_argument('--login', action='store_true', help='Zaloguj się (dla treści tylko dla patronów)')
     parser.add_argument('--email', help='Email do logowania')
@@ -322,6 +326,10 @@ def main():
     # Inicjalizuj autoryzację
     token_file = Path(args.token_file) if args.token_file else TOKEN_FILE
     auth = Auth(token_file)
+    
+    # Jeśli --all, ustaw bardzo dużą liczbę odcinków
+    if args.all:
+        args.max_episodes = 99999
     
     # Logowanie
     if args.login:
