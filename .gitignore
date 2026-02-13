@@ -1,0 +1,45 @@
+# Radio 357 Podcast Downloader - .gitignore
+
+# Tokeny autoryzacji (NIE commituj!)
+.radio357_token
+*.radio357_token
+*_token.json
+
+# Pobrane podcasty
+Podcasts/
+*.mp3
+
+# Wygenerowane RSS feedy
+*.xml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+podcast-log.txt
+
+# Temporary files
+*.tmp
+*.bak
