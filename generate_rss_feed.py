@@ -221,11 +221,22 @@ def generate_rss_feed(program_id, output_file, max_episodes=50, include_exclusiv
     for episode in episodes:
         episode_id = episode.get("id")
         episode_title = episode.get("title", f"Odcinek {episode_id}")
-        episode_desc = episode.get("desc", "")
+        episode_subtitle = episode.get("subTitle", "")
+        episode_desc = episode.get("description", "")
+        episode_desc_rich = episode.get("descriptionRich", "")
         published_at = episode.get("publishedAt", 0)
         is_free = episode.get("isFree", True)
         duration = episode.get("duration", 0)
         episode_image = episode.get("image", program_image)
+        
+        # Autorzy/prowadzący
+        team = episode.get("team", [])
+        authors = [member.get("name", "") for member in team if member.get("name")]
+        author_emails = [member.get("email", "") for member in team if member.get("email")]
+        
+        # Kategorie
+        categories = episode.get("categories", [])
+        category_names = [cat.get("name", "") for cat in categories if cat.get("name")]
         
         # Pomiń treści dla patronów jeśli nie chcemy ich includować
         if not is_free and not include_exclusive:
@@ -257,6 +268,11 @@ def generate_rss_feed(program_id, output_file, max_episodes=50, include_exclusiv
         item_title = SubElement(item, 'title')
         item_title.text = episode_title
         
+        # Dodaj podtytuł jeśli istnieje
+        if episode_subtitle:
+            full_title = f"{episode_title} {episode_subtitle}"
+            item_title.text = full_title
+        
         item_link = SubElement(item, 'link')
         item_link.text = f"https://radio357.pl/podcasty/audycje/odcinek/{episode_id}/"
         
@@ -266,8 +282,32 @@ def generate_rss_feed(program_id, output_file, max_episodes=50, include_exclusiv
         item_pubDate = SubElement(item, 'pubDate')
         item_pubDate.text = pub_date_str
         
+        # Autor(zy)
+        if authors:
+            # RSS 2.0 author (wymaga email)
+            if author_emails:
+                item_author = SubElement(item, 'author')
+                item_author.text = f"{author_emails[0]} ({authors[0]})"
+            
+            # iTunes author (może być samo imię)
+            itunes_author = SubElement(item, 'itunes:author')
+            itunes_author.text = ", ".join(authors)
+        
+        # Kategorie
+        for cat_name in category_names:
+            item_category = SubElement(item, 'category')
+            item_category.text = cat_name
+        
+        # Opis - użyj HTML jeśli dostępny, w przeciwnym razie zwykły tekst
+        description_text = episode_desc_rich if episode_desc_rich else (episode_desc or episode_title)
+        
         item_description = SubElement(item, 'description')
-        item_description.text = episode_desc or episode_title
+        item_description.text = description_text
+        
+        # Content:encoded dla bogatszego HTML (jeśli dostępny)
+        if episode_desc_rich:
+            content_encoded = SubElement(item, 'content:encoded')
+            content_encoded.text = episode_desc_rich
         
         item_enclosure = SubElement(item, 'enclosure', {
             'url': audio_url,
@@ -284,6 +324,12 @@ def generate_rss_feed(program_id, output_file, max_episodes=50, include_exclusiv
             itunes_duration = SubElement(item, 'itunes:duration')
             itunes_duration.text = duration_str
         
+        # iTunes subtitle (krótki opis)
+        if episode_subtitle or episode_desc:
+            itunes_subtitle = SubElement(item, 'itunes:subtitle')
+            itunes_subtitle.text = episode_subtitle if episode_subtitle else (episode_desc[:250] if episode_desc else "")
+        
+        # iTunes summary (pełny opis)
         itunes_summary = SubElement(item, 'itunes:summary')
         itunes_summary.text = episode_desc or episode_title
         

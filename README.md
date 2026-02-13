@@ -106,6 +106,17 @@ python3 podcaster357.py --help
 
 ## 🎙️ Generator RSS
 
+Generuje feedy RSS 2.0 kompatybilne z iTunes/Apple Podcasts i innymi aplikacjami podcastowymi.
+
+**Informacje w feedzie:**
+- Tytuł i podtytuł odcinka
+- Pełny opis (z obsługą HTML)
+- Autor(zy)/prowadzący z imieniem i emailem
+- Kategorie odcinków
+- Data publikacji i czas trwania
+- Obrazy dla programu i odcinków
+- Link do odcinka na Radio 357
+
 ### Pojedynczy feed
 
 ```bash
