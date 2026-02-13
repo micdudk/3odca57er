@@ -2,14 +2,17 @@
 # Komentarze zaczynające się od # są ignorowane
 # Puste linie są ignorowane
 
-# Szał
-100037114
-
 # Pikselowe marzenia
 100064080
 
-# Złe Radio
-130265
-
 # Rzecz technologiczna
 251803
+
+# Chore sąsiadów sny
+100037114
+
+# Chłopcy z ferajny
+100028123
+
+# Audycja KLIMAtyczna
+407824

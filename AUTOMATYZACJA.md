@@ -82,6 +82,7 @@ Skrypt automatycznie:
 - Generuje nazwę pliku XML na podstawie nazwy programu (np. `chore_sasiadow_sny.xml`)
 - Tworzy wszystkie pliki w jednym katalogu
 - Domyślnie pobiera 50 ostatnich odcinków (użyj `--all` dla wszystkich)
+- **Domyślnie pobiera wszystkie treści, włącznie z treściami dla patronów** (użyj `--free-only` dla tylko darmowych)
 
 Skrypt aktualizujący:
 

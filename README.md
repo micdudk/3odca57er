@@ -109,13 +109,13 @@ python3 podcaster357.py --help
 ### Pojedynczy feed
 
 ```bash
-# Utworzy feed.xml dla wybranego programu
+# Utworzy feed.xml dla wybranego programu (domyślnie: wszystkie treści, włącznie z patronami)
 python3 generate_rss_feed.py 100064080 --output feed.xml
 
 # Pobierz wszystkie odcinki (bez limitu)
 python3 generate_rss_feed.py 100064080 --all --output feed.xml
 
-# Tylko darmowe odcinki
+# Tylko darmowe odcinki (bez treści dla patronów)
 python3 generate_rss_feed.py 100064080 --free-only --output feed.xml
 ```
 
@@ -143,11 +143,14 @@ Utwórz `config.txt` z listą ID programów (jeden per linia):
 Uruchom skrypt - automatycznie wygeneruje pliki XML z nazwami utworzonymi z nazw programów:
 
 ```bash
-# Wygeneruj wszystkie feedy (domyślnie: 50 odcinków)
+# Wygeneruj wszystkie feedy (domyślnie: 50 odcinków, wszystkie treści włącznie z patronami)
 python3 generate_all_feeds.py
 
 # Pobierz wszystkie dostępne odcinki
 python3 generate_all_feeds.py --all
+
+# Tylko darmowe treści (bez treści dla patronów)
+python3 generate_all_feeds.py --free-only
 
 # Własny katalog wyjściowy
 python3 generate_all_feeds.py -o /var/www/rss

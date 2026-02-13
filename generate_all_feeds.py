@@ -89,11 +89,6 @@ Plik konfiguracyjny zawiera ID programów (jeden per linia):
         print("✗ Brak programów w pliku konfiguracyjnym")
         sys.exit(1)
     
-    print(f"\n{'='*60}")
-    print(f"Znaleziono {len(program_ids)} programów do wygenerowania")
-    print(f"Katalog wyjściowy: {args.output_dir}")
-    print(f"{'='*60}\n")
-    
     # Upewnij się, że katalog wyjściowy istnieje
     Path(args.output_dir).mkdir(parents=True, exist_ok=True)
     
@@ -119,6 +114,15 @@ Plik konfiguracyjny zawiera ID programów (jeden per linia):
         max_episodes = args.max_episodes
     
     include_exclusive = not args.free_only
+    
+    print(f"\n{'='*60}")
+    print(f"Znaleziono {len(program_ids)} programów do wygenerowania")
+    print(f"Katalog wyjściowy: {args.output_dir}")
+    if args.free_only:
+        print(f"Tryb: tylko darmowe odcinki")
+    else:
+        print(f"Tryb: wszystkie odcinki (włącznie z treściami dla patronów)")
+    print(f"{'='*60}\n")
     
     # Generuj feedy
     success_count = 0
