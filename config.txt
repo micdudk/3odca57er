@@ -1,6 +1,8 @@
 # Lista ID programów Radio 357 (jeden per linia)
 # Komentarze zaczynające się od # są ignorowane
 # Puste linie są ignorowane
+# Gruzja
+185086
 
 # Pikselowe marzenia
 100064080
