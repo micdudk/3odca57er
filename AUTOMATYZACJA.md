@@ -59,7 +59,47 @@ crontab -e
 
 ## 📝 Wiele audycji
 
-Config z listą programów:
+### Metoda 1: config.txt (zalecane)
+
+Stwórz plik `config.txt` z listą ID programów:
+
+```
+# Lista ID programów Radio 357 (jeden per linia)
+# Komentarze zaczynające się od # są ignorowane
+
+# Szał
+100037114
+
+# Pikselowe marzenia
+100064080
+
+# Złe Radio
+130265
+```
+
+Skrypt automatycznie:
+- Pobiera nazwę każdego programu z API
+- Generuje nazwę pliku XML na podstawie nazwy programu (np. `chore_sasiadow_sny.xml`)
+- Tworzy wszystkie pliki w jednym katalogu
+- Domyślnie pobiera 50 ostatnich odcinków (użyj `--all` dla wszystkich)
+
+Skrypt aktualizujący:
+
+```bash
+cat > ~/update_all_rss.sh << 'EOF'
+#!/bin/bash
+cd ~/radio357
+python3 generate_all_feeds.py \
+  --config config.txt \
+  --output-dir /var/www/html/rss \
+  --all
+echo "$(date): Zaktualizowano" >> ~/rss_update.log
+EOF
+
+chmod +x ~/update_all_rss.sh
+```
+
+### Metoda 2: bash loop (legacy)
 
 ```bash
 cat > ~/rss_feeds.conf << 'EOF'
@@ -70,10 +110,10 @@ cat > ~/rss_feeds.conf << 'EOF'
 EOF
 ```
 
-Skrypt aktualizujący wszystko:
+Skrypt aktualizujący:
 
 ```bash
-cat > ~/update_all_rss.sh << 'EOF'
+cat > ~/update_all_rss_legacy.sh << 'EOF'
 #!/bin/bash
 OUTPUT_DIR="/var/www/html/rss"
 SCRIPT_DIR="$HOME/radio357"
@@ -85,17 +125,31 @@ while IFS='|' read -r program_id filename max_episodes; do
     
     python3 generate_rss_feed.py "$program_id" \
         --output "$OUTPUT_DIR/$filename" \
-        --max-episodes "$max_episodes"
+        -n "$max_episodes"
     chmod 644 "$OUTPUT_DIR/$filename"
 done < "$HOME/rss_feeds.conf"
 
 echo "$(date): Zaktualizowano" >> ~/rss_update.log
 EOF
 
-chmod +x ~/update_all_rss.sh
+chmod +x ~/update_all_rss_legacy.sh
+```
 
-# Cron (codziennie o 6:00)
-# 0 6 * * * /home/user/update_all_rss.sh
+### Cron
+
+Dodaj do crontab (codziennie o 6:00):
+
+```bash
+crontab -e
+# Dodaj:
+0 6 * * * /home/user/update_all_rss.sh
+```
+
+Inne częstotliwości:
+```bash
+0 */6 * * *  # Co 6 godzin
+*/30 * * * * # Co 30 minut
+0 0 * * *    # Codziennie o północy
 ```
 
 ## 🛡️ Zabezpieczenia (opcjonalne)

@@ -106,18 +106,67 @@ python3 podcaster357.py --help
 
 ## 🎙️ Generator RSS
 
-Bonus: `generate_rss_feed.py` tworzy feedy RSS.
+### Pojedynczy feed
 
 ```bash
+# Utworzy feed.xml dla wybranego programu
 python3 generate_rss_feed.py 100064080 --output feed.xml
+
+# Pobierz wszystkie odcinki (bez limitu)
+python3 generate_rss_feed.py 100064080 --all --output feed.xml
+
+# Tylko darmowe odcinki
+python3 generate_rss_feed.py 100064080 --free-only --output feed.xml
+```
+
+### Wiele feedów jednocześnie
+
+Utwórz `config.txt` z listą ID programów (jeden per linia):
+
+```
+# Lista ID programów Radio 357
+# Komentarze zaczynające się od # są ignorowane
+
+# Szał
+100037114
+
+# Pikselowe marzenia
+100064080
+
+# Złe Radio  
+130265
+
+# Rzecz technologiczna
+251803
+```
+
+Uruchom skrypt - automatycznie wygeneruje pliki XML z nazwami utworzonymi z nazw programów:
+
+```bash
+# Wygeneruj wszystkie feedy (domyślnie: 50 odcinków)
+python3 generate_all_feeds.py
+
+# Pobierz wszystkie dostępne odcinki
+python3 generate_all_feeds.py --all
+
+# Własny katalog wyjściowy
+python3 generate_all_feeds.py -o /var/www/rss
+
+# Ograniczenie liczby odcinków
+python3 generate_all_feeds.py -n 20
+
+# Własny plik konfiguracyjny + wszystkie odcinki
+python3 generate_all_feeds.py -c moje_programy.txt -o /var/www/html/rss --all
 ```
 
 **Automatyzacja**: Zobacz [AUTOMATYZACJA.md](AUTOMATYZACJA.md) - cron, systemd, bezpieczeństwo.
 
 ## 📦 Pliki w repo
 
-- `podcaster357.py` - główny skrypt
-- `generate_rss_feed.py` - generator feedów RSS
+- `podcaster357.py` - główny skrypt do pobierania podcastów
+- `generate_rss_feed.py` - generator pojedynczego feedu RSS
+- `generate_all_feeds.py` - generator wielu feedów z pliku konfiguracyjnego
+- `config.txt` - przykładowy plik konfiguracyjny (lista ID programów)
 - `AUTOMATYZACJA.md` - przewodnik po automatyzacji na serwerze
 - `requirements.txt` - zależności
 

@@ -1,0 +1,15 @@
+# Lista ID programów Radio 357 (jeden per linia)
+# Komentarze zaczynające się od # są ignorowane
+# Puste linie są ignorowane
+
+# Szał
+100037114
+
+# Pikselowe marzenia
+100064080
+
+# Złe Radio
+130265
+
+# Rzecz technologiczna
+251803
