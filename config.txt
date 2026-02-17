@@ -1,4 +1,4 @@
-# Lista ID programów Radio 357 (jeden per linia)
+# Lista ID programów Radia 357 (jeden per linia)
 # Komentarze zaczynające się od # są ignorowane
 # Puste linie są ignorowane
 # Gruzja

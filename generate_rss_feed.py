@@ -188,7 +188,7 @@ def generate_rss_feed(program_id, output_file, max_episodes=50, include_exclusiv
     link.text = f"https://radio357.pl/podcasty/audycje/"
     
     description = SubElement(channel, 'description')
-    description.text = program_desc or f"Podcast {program_name} z Radio 357"
+    description.text = program_desc or f"Podcast {program_name} z Radia 357"
     
     language = SubElement(channel, 'language')
     language.text = 'pl-PL'
@@ -204,7 +204,7 @@ def generate_rss_feed(program_id, output_file, max_episodes=50, include_exclusiv
     
     # iTunes specific
     itunes_author = SubElement(channel, 'itunes:author')
-    itunes_author.text = "Radio 357"
+    itunes_author.text = "Radia 357"
     
     itunes_summary = SubElement(channel, 'itunes:summary')
     itunes_summary.text = program_desc or f"Podcast {program_name}"
@@ -363,8 +363,8 @@ def main():
     parser.add_argument('--all', action='store_true', help='Pobierz wszystkie dostępne odcinki (ignoruje -n)')
     parser.add_argument('--free-only', action='store_true', help='Pobierz tylko darmowe odcinki (bez treści dla patronów)')
     parser.add_argument('--login', action='store_true', help='Zaloguj się (dla treści tylko dla patronów)')
-    parser.add_argument('--email', help='Email do logowania')
-    parser.add_argument('--password', help='Hasło')
+    parser.add_argument('--login-email', help='Email do logowania (dla treści patronów)')
+    parser.add_argument('--login-password', help='Hasło do logowania (dla treści patronów)')
     parser.add_argument('--token-file', help=f'Plik z tokenami (domyślnie: {TOKEN_FILE})')
     
     args = parser.parse_args()
@@ -379,8 +379,8 @@ def main():
     
     # Logowanie
     if args.login:
-        email = args.email or input("Email: ")
-        password = args.password or getpass.getpass("Hasło: ")
+        email = args.login_email or input("Email: ")
+        password = args.login_password or getpass.getpass("Hasło: ")
         
         if auth.login(email, password):
             print("✓ Zalogowano pomyślnie\n")
