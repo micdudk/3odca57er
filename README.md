@@ -37,6 +37,9 @@ python3 generate_author_feed_by_id.py
 # Lub podaj ID autora
 python3 generate_author_feed_by_id.py piotr.stelmach@radio357.pl
 
+# Feedy dla WSZYSTKICH autorów (batch)
+python3 generate_author_feed_by_id.py --all-authors --min-episodes 10
+
 # Zobacz listę autorów
 python3 list_authors.py --details
 ```
@@ -57,7 +60,7 @@ python3 download_from_feed.py feeds/369.xml -o ~/Podcasts/369
 podcaster357.py                 # Pobieranie podcastów
 generate_rss_feed.py            # Feed (audycja)
 generate_all_feeds.py           # Feedy (wiele audycji)
-generate_author_feed_by_id.py   # Feed (autor)
+generate_author_feed_by_id.py   # Feed (autor/autorzy)
 list_authors.py                 # Lista autorów
 download_from_feed.py           # Pobieranie z RSS
 config.txt                      # ID programów (po jednym na linię)
